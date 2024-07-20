@@ -1,0 +1,13 @@
+minio:
+  url: http://localhost:9000
+  access:
+    name: gclVEXMM4U28cCxBy0Yd
+    secret: nimfVgxPiW0EW6MxmVuABCKZWfXThn5KwePWeCK1
+  bucket:
+    name: pkg-fetch
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: lsk123456
+    url: jdbc:mysql://localhost:3306/package_fetch_sys
