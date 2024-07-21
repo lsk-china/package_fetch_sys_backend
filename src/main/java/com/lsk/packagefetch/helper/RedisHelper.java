@@ -2,6 +2,7 @@ package com.lsk.packagefetch.helper;
 
 import com.google.gson.Gson;
 import com.lsk.packagefetch.model.User;
+import com.lsk.packagefetch.util.GsonUtil;
 import com.lsk.packagefetch.util.RedisKeys;
 import com.lsk.packagefetch.util.StatusCode;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,7 +17,7 @@ public class RedisHelper {
     @Resource
     private RedisTemplate<String, String> redisTemplate;
 
-    private static final Gson gson = new Gson();
+    private static final Gson gson = GsonUtil.getGson();
 
     private void set(String key, Object val) {
         redisTemplate.opsForValue().set(key, gson.toJson(val));

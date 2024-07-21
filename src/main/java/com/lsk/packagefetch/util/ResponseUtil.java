@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public final class ResponseUtil {
-    private static final Gson gson = new Gson();
+    private static final Gson gson = GsonUtil.getGson();
     @Data
     @NoArgsConstructor
     @AllArgsConstructor

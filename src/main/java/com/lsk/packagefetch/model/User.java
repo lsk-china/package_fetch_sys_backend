@@ -17,6 +17,6 @@ public class User {
     private String username;
 
     @TableField("password")
-    private transient String password;
+    private String password;
 
 }
