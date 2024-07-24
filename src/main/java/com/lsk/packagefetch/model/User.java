@@ -19,4 +19,10 @@ public class User {
     @TableField("password")
     private String password;
 
+    @TableField("finished_order_count")
+    private Integer finishedOrderCount;
+
+    @TableField("published_order_count")
+    private Integer publishedOrderCount;
+
 }
