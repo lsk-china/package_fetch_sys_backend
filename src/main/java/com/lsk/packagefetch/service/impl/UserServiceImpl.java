@@ -5,11 +5,15 @@ import com.lsk.packagefetch.helper.RedisHelper;
 import com.lsk.packagefetch.mapper.UserMapper;
 import com.lsk.packagefetch.model.User;
 import com.lsk.packagefetch.service.UserService;
+import com.lsk.packagefetch.util.SecurityUtil;
 import com.lsk.packagefetch.util.StatusCode;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -55,5 +59,16 @@ public class UserServiceImpl implements UserService {
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(password));
         userMapper.insert(user);
+    }
+
+    @Override
+    public Map<String, Integer> myOrderStatistics() {
+        String username = SecurityUtil.currentUsername();
+        Integer uid = redisHelper.getUidByUsername(username);
+        User user = queryUserById(uid);
+        Map<String, Integer> map = new HashMap<>();
+        map.put("finished_order_count", user.getFinishedOrderCount());
+        map.put("published_order_count", user.getPublishedOrderCount());
+        return map;
     }
 }

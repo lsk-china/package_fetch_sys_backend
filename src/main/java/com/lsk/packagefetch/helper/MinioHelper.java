@@ -9,6 +9,8 @@ import io.minio.errors.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -57,19 +59,20 @@ public class MinioHelper {
         return objectName;
     }
 
-    public OutputStream getObject(String objectName) {
+    public org.springframework.core.io.Resource getObject(String objectName) {
         try {
             GetObjectResponse response = minioClient.getObject(GetObjectArgs.builder()
                     .object(objectName)
                     .bucket(bucketName)
                     .build());
-            OutputStream os = new ByteArrayOutputStream(1024);
+            ByteArrayOutputStream os = new ByteArrayOutputStream(1024);
             byte[] buffer = new byte[1024];
             while (response.available() > 0) {
                 int len = response.read(buffer);
                 os.write(buffer, 0, len);
             }
-            return os;
+            org.springframework.core.io.Resource resource = new ByteArrayResource(os.toByteArray());
+            return resource;
         } catch (Exception e) {
             throw new StatusCode(500, "cannot download file", e);
         }

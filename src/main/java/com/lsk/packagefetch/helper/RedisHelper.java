@@ -68,4 +68,8 @@ public class RedisHelper {
         }
         return get(RedisKeys.CODE_CONTENT.of(codeId), String.class);
     }
+
+    public void updateCachedUser(Integer uid, User user) {
+        set(RedisKeys.USERINFO.of(uid), gson.toJson(user));
+    }
 }

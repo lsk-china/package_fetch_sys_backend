@@ -67,4 +67,7 @@ public class Order {
     @TableField("comments")
     private String comments;
 
+    @TableField("state")
+    private String state;
+
 }

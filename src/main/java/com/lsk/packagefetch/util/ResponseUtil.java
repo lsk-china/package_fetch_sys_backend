@@ -1,10 +1,14 @@
 package com.lsk.packagefetch.util;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 public final class ResponseUtil {
@@ -17,6 +21,13 @@ public final class ResponseUtil {
         private String message;
         private Object data;
         public String build() {
+            if (data != null && data instanceof Page) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("total", ((Page) data).getPages());
+                map.put("current", ((Page) data).getCurrent());
+                map.put("paged", ((Page) data).getRecords());
+                this.data = map;
+            }
             return gson.toJson(this);
         }
     }
